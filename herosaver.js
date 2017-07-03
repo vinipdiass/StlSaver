@@ -207,13 +207,17 @@ stl.click(function(e) {
     e.preventDefault();
     var exporter = new THREE.STLExporter();
     var stlString = exporter.parse(CK.activeCharacter.threeObj.children[1])
-    download(stlString, 'char.stl', 'text/plain');
+    var name = CK.activeCharacter.name
+    name = name === "" ? "unnamed" : name
+    download(stlString, name + '.stl', 'text/plain');
 });
 
 sjson.click(function(e) {
     e.preventDefault();
     var char_json = JSON.stringify(CK.activeCharacter.characterData);
-    download(char_json, "char.json", "text/plain");
+    var name = CK.activeCharacter.name
+    name = name === "" ? "unnamed" : name
+    download(char_json, name + ".json", "text/plain");
 });
 
 ljson.on('change', function(e) {
