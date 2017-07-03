@@ -206,7 +206,15 @@ var labelljson  = $("<label/>").attr({"for": "ljson"}).addClass("shop-button").c
 stl.click(function(e) {
     e.preventDefault();
     var exporter = new THREE.STLExporter();
-    var stlString = exporter.parse(CK.activeCharacter.threeObj.children[1])
+    var objs = CK.activeCharacter.threeObj.children;
+    var max_obj = 0;
+    var i;
+    for(i in objs) {
+        if (objs[i].children.length > objs[max_obj].children.length) {
+            max_obj = i;
+        }        
+    }
+    var stlString = exporter.parse(CK.activeCharacter.threeObj.children[max_obj])
     var name = CK.activeCharacter.name
     name = name === "" ? "unnamed" : name
     download(stlString, name + '.stl', 'text/plain');
