@@ -15,9 +15,9 @@
 if(typeof THREE == 'undefined' && typeof require != 'undefined')
     var THREE = require('three')
 
-THREE.STLExporter = function () {};
+RK.STLExporter = function () {};
 
-THREE.STLExporter.prototype = {
+RK.STLExporter.prototype = {
 
     constructor: THREE.STLExporter,
 
@@ -30,7 +30,7 @@ THREE.STLExporter.prototype = {
             var output = '';
             output += 'solid exported\n';
             scene.traverse( function ( object ) {
-                if(object instanceof THREE.Mesh){
+                if(object instanceof RK.Mesh){
 
                     // if object is hidden - exit
                     if(object.visible == false) return; 
@@ -40,9 +40,9 @@ THREE.STLExporter.prototype = {
                     var skeleton = object.skeleton;
                     var mesh = object;
 
-                    if(geometry instanceof THREE.BufferGeometry){
+                    if(geometry instanceof RK.BufferGeometry){
                         var oldgeometry = geometry.clone();
-                        geometry = new THREE.Geometry().fromBufferGeometry(geometry);
+                        geometry = new RK.Geometry().fromBufferGeometry(geometry);
                         var skinIndex = oldgeometry.getAttribute('skinIndex');
                         var skinWeight = oldgeometry.getAttribute('skinWeight');
                         var morphTarget = oldgeometry.getAttribute('morphTarget0');
@@ -60,16 +60,16 @@ THREE.STLExporter.prototype = {
                                 geometry.morphTargets[j].vertices = [];
                             }
                             for(var i = 0; i < geometry.vertices.length; i++) {
-                                geometry.skinIndices.push((new THREE.Vector4 ()).fromAttribute(skinIndex,i));
-                                geometry.skinWeights.push((new THREE.Vector4 ()).fromAttribute(skinWeight,i));
+                                geometry.skinIndices.push((new THREE.Vector4 ()).fromBufferAttribute(skinIndex,i));
+                                geometry.skinWeights.push((new THREE.Vector4 ()).fromBufferAttribute(skinWeight,i));
                                 for(var j = 0; j < mtcount; j++) {
-                                    geometry.morphTargets[j].vertices.push((new THREE.Vector3 ()).fromAttribute(oldgeometry.getAttribute('morphTarget' + j)));
+                                    geometry.morphTargets[j].vertices.push((new THREE.Vector3 ()).fromBufferAttribute(oldgeometry.getAttribute('morphTarget' + j)));
                                 }
                             }
                         }
                     }
 
-                    if ( geometry instanceof THREE.Geometry) {
+                    if ( geometry instanceof RK.Geometry) {
 
                         var vertices = geometry.vertices;
                         var faces = geometry.faces;
@@ -185,7 +185,7 @@ THREE.STLExporter.prototype = {
 };
 
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = THREE.STLExporter
+    module.exports = RK.STLExporter
 } 
 else if ((typeof define !== "undefined" && define !== null) && (define.amd !== null)) {
     define([], function() {
@@ -205,7 +205,7 @@ var labelljson  = $("<label/>").attr({"for": "ljson"}).addClass("shop-button").c
 
 stl.click(function(e) {
     e.preventDefault();
-    var exporter = new THREE.STLExporter();
+    var exporter = new RK.STLExporter();
     var objs = CK.activeCharacter.threeObj.children;
     var max_obj = 0;
     var i;
@@ -245,3 +245,4 @@ $("#print-my-mini").append(stl);
 $("#print-my-mini").append(sjson);
 $("#print-my-mini").append(ljson);
 $("#print-my-mini").append(labelljson);
+
