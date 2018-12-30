@@ -10,6 +10,7 @@
  * @author kovacsv / http://kovacsv.hu/
  * @author mrdoob / http://mrdoob.com/
  * @author atnartur / http://atnartur.ru
+ * @author christofsteel / https://github.com/christofsteel
  */
 
 if(typeof THREE == 'undefined' && typeof require != 'undefined')
@@ -26,12 +27,13 @@ RK.STLExporter.prototype = {
         var vector = new THREE.Vector3();
         var normalMatrixWorld = new THREE.Matrix3();
 
-        return function ( scene ) {
+        return function ( scenes ) {
+console.log(scenes);
             var output = '';
             output += 'solid exported\n';
-            scene.traverse( function ( object ) {
-                if(object instanceof RK.Mesh){
-
+            for(var scene_nr in scenes) {
+            scenes[scene_nr].traverse( function ( object ) {
+                if(object instanceof RK.Mesh){		    
                     // if object is hidden - exit
                     if(object.visible == false) return; 
 
@@ -174,9 +176,8 @@ RK.STLExporter.prototype = {
                         }
                     }
                 }
-
             } );
-
+}
             output += 'endsolid exported\n';
 
             return output;
@@ -195,30 +196,75 @@ else if ((typeof define !== "undefined" && define !== null) && (define.amd !== n
 
 
 
-
+$("#print-my-mini").replaceWith($("#print-my-mini").clone());
 
 $("#add").css({"display": "none"});
-var stl  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events":"auto"}).text("Download STL");
+var stl  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events":"auto"}).text("Export Figure");
+var stl_base  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events":"auto"}).text("Export Figure + Base");
+var first_line = $("<div/>")
+first_line.append(stl)
+first_line.append(stl_base)
 var sjson  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events": "auto"}).text("Save JSON");
 var ljson  = $("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Load JSON");
-var labelljson  = $("<label/>").attr({"for": "ljson"}).addClass("shop-button").css({"margin": "5px", "pointer-events": "auto"}).text("Load JSON");
+var labeljson  = $("<label/>").attr({"for": "ljson"}).addClass("shop-button").css({"margin": "5px", "pointer-events": "auto"}).text("Load JSON");
+var second_line = $("<div/>")
+second_line.append(sjson)
+second_line.append(ljson)
+second_line.append(labeljson)
 
 stl.click(function(e) {
-    e.preventDefault();
-    var exporter = new RK.STLExporter();
-    var objs = CK.activeCharacter.threeObj.children;
-    var max_obj = 0;
+    e.preventDefault(); 
+    var exporter = new RK.STLExporter();    
+    var objs = CK.activeCharacter.threeObj.children;    
+    var character = objs[0];
+    var figure = [];
+    var max_objs = 0;
     var i;
-    for(i in objs) {
-        if (objs[i].children.length > objs[max_obj].children.length) {
-            max_obj = i;
+    for(i in objs) { // find character
+        if (objs[i].children.length > objs[max_objs].children.length) {
+            console.log("Id " + max_objs + " is not the character");
+            character = objs[i];
+            max_objs = i;
         }        
     }
-    var stlString = exporter.parse(CK.activeCharacter.threeObj.children[max_obj])
+    if(character.children.length > 9) { // There is an option to hide the character. Since I do not know where this option is saved
+                                        // we use the following heuristic: If there is no object with 10 or more children, the character
+                                        // must be hidden...
+      console.log("Found Character, id=" + max_objs);
+      console.log(character);
+      figure.push(character);
+    }
+    if(CK.activeCharacter.characterData.parts.mount !== undefined) {
+        console.log("Exporting Mount");
+        var mount = undefined;
+	for(i in objs) { // find mount
+            var j;
+            for(j in objs[i].children) {
+                if(objs[i].children[j].name == "mount" && objs[i].children.length < 10) {
+                    console.log("Found mount, id=" + i + "," + j)
+                    mount = objs[i];
+                }
+            }
+        }
+        console.log(mount);
+        figure.push(mount);
+        console.log(figure);
+    }
+    console.log(figure);
+    var stlString = exporter.parse(figure)
     var name = CK.activeCharacter.name
     name = name === "" ? "unnamed" : name
-    download(stlString, name + '.stl', 'text/plain');
+    download(stlString, name + '.stl', 'application/sla');
 });
+stl_base.click(function(e) {
+    e.preventDefault(); 
+    var exporter = new RK.STLExporter();    
+    var stlString = exporter.parse([CK.activeCharacter.threeObj])
+    var name = CK.activeCharacter.name
+    name = name === "" ? "unnamed" : name
+    download(stlString, name + '_base.stl', 'application/sla');
+});
+
 
 sjson.click(function(e) {
     e.preventDefault();
@@ -241,8 +287,5 @@ ljson.on('change', function(e) {
     reader.readAsText(file);
 });
 
-$("#print-my-mini").append(stl);
-$("#print-my-mini").append(sjson);
-$("#print-my-mini").append(ljson);
-$("#print-my-mini").append(labelljson);
-
+$("#print-my-mini").append(first_line);
+$("#print-my-mini").append(second_line);
