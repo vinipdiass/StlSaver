@@ -3,6 +3,11 @@ Herosaver
 
 Save Configuration and STL of https://www.heroforge.com/
 
+Update
+------
+
+Now also exports the base and the mount (and if you hide the rider, only the mount) :)
+
 Usage
 -----
 
