@@ -6,7 +6,7 @@ Save Configuration and STL of https://www.heroforge.com/
 Update
 ------
 
-Now also exports the base and the mount (and if you hide the rider, only the mount) :)
+Heroforge.com was recently changed. This broke loading the code and a lot of UI code. Exporting is still possible with a workaround (See below).
 
 Usage
 -----
@@ -16,8 +16,40 @@ Usage
   3. Paste the following
   
 ```
+var script = document.createElement('script');script.src = "https://code.jquery.com/jquery-3.3.1.min.js";document.getElementsByTagName('body')[0].appendChild(script);
+```
+  
+  4. Wait a few seconds, then paste
+  
+```
 $("<script>").load("https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js").appendTo($("body"))
 $("<script>").load("https://raw.githubusercontent.com/christofsteel/herosaver/master/herosaver.min.js").appendTo($("body"))
+```
+
+  5. Exporting
+  
+  - To export the figure with the base
+  
+```
+stl_base.click()
+```
+
+  - To export the figure without the base
+  
+```
+stl.click()
+```
+
+  - To export the figure as JSON
+  
+```
+sjson.click()
+```
+
+  - To import a previously exported JSON (This may require disabling a popup manager)
+
+```
+ljson.click()
 ```
 
 Limitations
