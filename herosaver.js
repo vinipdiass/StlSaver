@@ -195,22 +195,18 @@ else if ((typeof define !== "undefined" && define !== null) && (define.amd !== n
 }
 
 
-
-$("#print-my-mini").replaceWith($("#print-my-mini").clone());
-
-$("#add").css({"display": "none"});
-var stl  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events":"auto"}).text("Export Figure");
-var stl_base  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events":"auto"}).text("Export Figure + Base");
-var first_line = $("<div/>")
-first_line.append(stl)
-first_line.append(stl_base)
-var sjson  = $("<a/>").addClass("shop-button").css({"margin": "5px", "pointer-events": "auto"}).text("Save JSON");
+var character_area = $(".characterArea");
+var stl = $("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)" }).text("Export Figure");
+var stl_base = $("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)" }).text("Export Figure + Base");
+var sjson = $("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)" }).text("Save JSON");
 var ljson  = $("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Load JSON");
-var labeljson  = $("<label/>").attr({"for": "ljson"}).addClass("shop-button").css({"margin": "5px", "pointer-events": "auto"}).text("Load JSON");
-var second_line = $("<div/>")
-second_line.append(sjson)
-second_line.append(ljson)
-second_line.append(labeljson)
+var labeljson  = $("<label/>").attr({"for": "ljson"}).css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "pointer-events": "auto"}).text("Load JSON");
+character_area.append(stl);
+character_area.append(stl_base);
+character_area.append(sjson);
+character_area.append(ljson);
+character_area.append(labeljson);
+character_area.css("right", 0);
 
 stl.click(function(e) {
     e.preventDefault(); 
