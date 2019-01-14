@@ -3,11 +3,6 @@ Herosaver
 
 Save Configuration and STL of https://www.heroforge.com/
 
-Update
-------
-
-Heroforge.com was recently changed. This broke loading the code and a lot of UI code. Exporting is still possible with a workaround (See below).
-
 Usage
 -----
 
@@ -16,40 +11,7 @@ Usage
   3. Paste the following
   
 ```
-var script = document.createElement('script');script.src = "https://code.jquery.com/jquery-3.3.1.min.js";document.getElementsByTagName('body')[0].appendChild(script);
-```
-  
-  4. Wait a few seconds, then paste
-  
-```
-$("<script>").load("https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js").appendTo($("body"))
-$("<script>").load("https://raw.githubusercontent.com/christofsteel/herosaver/master/herosaver.min.js").appendTo($("body"))
-```
-
-  5. Exporting
-  
-  - To export the figure with the base
-  
-```
-stl_base.click()
-```
-
-  - To export the figure without the base
-  
-```
-stl.click()
-```
-
-  - To export the figure as JSON
-  
-```
-sjson.click()
-```
-
-  - To import a previously exported JSON (This may require disabling a popup manager)
-
-```
-ljson.click()
+var xhr=new XMLHttpRequest;xhr.open("get","https://raw.githubusercontent.com/christofsteel/herosaver/master/herosaver.min.js",true);xhr.onreadystatechange=function(){if(xhr.readyState==4){var script=document.createElement("script");script.type="text/javascript";script.text=xhr.responseText;document.body.appendChild(script)}};xhr.send(null);
 ```
 
 Limitations
