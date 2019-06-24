@@ -197,7 +197,7 @@ function init() {
     character_area.append(labeljson);
     character_area.css("right", 0);
 
-    stl.click(function(e) {
+    /*stl.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
         var objs = CK.character.children;    
@@ -240,7 +240,7 @@ function init() {
         var name = CK.data.meta.character_name
         name = name === "" ? "unnamed" : name
         download(stlString, name + '.stl', 'application/sla');
-    });
+    });*/
     stl_base.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
