@@ -185,8 +185,8 @@ function init() {
 
 
     var character_area = jQuery(".characterArea");
-    var stl = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Export Figure");
-    var stl_base = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Export Figure + Base");
+    //var stl = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Export Figure");
+    var stl_base = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Export Figure");
     var sjson = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Save JSON");
     var ljson  = jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Load JSON");
     var labeljson  = jQuery("<label/>").attr({"for": "ljson"}).css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Load JSON");
