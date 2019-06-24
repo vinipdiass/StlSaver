@@ -200,7 +200,7 @@ function init() {
     stl.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
-        var objs = CK.character.threeObj.children;    
+        var objs = CK.character.children;    
         var character = objs[0];
         var figure = [];
         var max_objs = 0;
@@ -219,7 +219,7 @@ function init() {
             console.log(character);
             figure.push(character);
         }
-        if(CK.character.characterData.parts.mount !== undefined) {
+        if(CK.data.parts.mount !== undefined) {
             console.log("Exporting Mount");
             var mount = undefined;
             for(i in objs) { // find mount
@@ -237,15 +237,15 @@ function init() {
         }
         console.log(figure);
         var stlString = exporter.parse(figure)
-        var name = CK.character.name
+        var name = CK.data.meta.character_name
         name = name === "" ? "unnamed" : name
         download(stlString, name + '.stl', 'application/sla');
     });
     stl_base.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
-        var stlString = exporter.parse([CK.character.threeObj])
-        var name = CK.character.name
+        var stlString = exporter.parse([CK.character])
+        var name = CK.data.meta.character_name
         name = name === "" ? "unnamed" : name
         download(stlString, name + '_base.stl', 'application/sla');
     });
@@ -253,8 +253,8 @@ function init() {
 
     sjson.click(function(e) {
         e.preventDefault();
-        var char_json = JSON.stringify(CK.character.characterData);
-        var name = CK.character.name
+        var char_json = JSON.stringify(CK.data);
+        var name = CK.data.meta.character_name
         name = name === "" ? "unnamed" : name
         download(char_json, name + ".json", "text/plain");
     });
