@@ -190,7 +190,7 @@ function init() {
     var sjson = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Save JSON");
     var ljson  = jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Load JSON");
     var labeljson  = jQuery("<label/>").attr({"for": "ljson"}).css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Load JSON");
-    character_area.append(stl);
+    //character_area.append(stl);
     character_area.append(stl_base);
     character_area.append(sjson);
     character_area.append(ljson);
