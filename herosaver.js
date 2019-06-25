@@ -184,12 +184,19 @@ function init() {
     }
 
 
-    var character_area = jQuery(".characterArea");
-    //var stl = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Export Figure");
-    var stl_base = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Export Figure");
-    var sjson = jQuery("<a />").css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" }).text("Save JSON");
-    var ljson  = jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Load JSON");
-    var labeljson  = jQuery("<label/>").attr({"for": "ljson"}).css({"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer"}).text("Load JSON");
+	var characterArea_hook = ".characterArea";
+	var menu_style = {"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" };
+	
+	var character_area, stl, stl_base, sjson, ljson, labeljson;
+	
+	stl = 				jQuery("<a />").css(menu_style).text("Export Figure");
+	stl_base = 			jQuery("<a />").css(menu_style).text("Export Model (STL)");
+	sjson = 			jQuery("<a />").css(menu_style).text("Export (JSON)");
+	ljson  = 			jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Import (JSON)");
+	labeljson  = 		jQuery("<label/>").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
+	
+	character_area = 	jQuery(characterArea_hook);
+	
     //character_area.append(stl);
     character_area.append(stl_base);
     character_area.append(sjson);
@@ -237,25 +244,22 @@ function init() {
         }
         console.log(figure);
         var stlString = exporter.parse(figure)
-        var name = CK.data.meta.character_name
-        name = name === "" ? "unnamed" : name
+        var name = get_name();
         download(stlString, name + '.stl', 'application/sla');
     });*/
     stl_base.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
         var stlString = exporter.parse([CK.character])
-        var name = CK.data.meta.character_name
-        name = name === "" ? "unnamed" : name
-        download(stlString, name + '_base.stl', 'application/sla');
+        var name = get_name();
+        download(stlString, name + '.stl', 'application/sla');
     });
 
 
     sjson.click(function(e) {
         e.preventDefault();
         var char_json = JSON.stringify(CK.data);
-        var name = CK.data.meta.character_name
-        name = name === "" ? "unnamed" : name
+        var name = get_name();
         download(char_json, name + ".json", "text/plain");
     });
 
@@ -285,3 +289,22 @@ function inject_script(url, callback) {
 inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
     inject_script("//cdnjs.cloudflare.com/ajax/libs/three.js/100/three.js", function () { init() })
 });
+
+function get_name() {
+  var timestamp = new Date().getUTCMilliseconds();
+  var uqID = timestamp.toString(16);
+  var name = "Character_uqID"
+  try {
+    var getName = CK.character.data.meta.character_name
+    name = getName === "" ? name : getName;
+  } catch (e) {
+    if (e instanceof ReferenceError) {
+        console.log("Name of character data location has changed");
+        console.log(e);
+    } else {
+        console.log("Other Error");
+        console.log(e);
+    }
+  }
+  return name;
+}
