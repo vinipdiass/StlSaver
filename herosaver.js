@@ -292,8 +292,8 @@ inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
 
 function get_name() {
   var timestamp = new Date().getUTCMilliseconds();
-  var uqID = timestamp.toString(16);
-  var name = "Character_uqID"
+  var uqID = timestamp.toString(36);
+  var name = "Character " + uqID; 
   try {
     var getName = CK.character.data.meta.character_name
     name = getName === "" ? name : getName;
