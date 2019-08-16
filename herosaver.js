@@ -25,11 +25,12 @@ function init() {
                         if(object instanceof RK.Mesh){		    
                             // if object is hidden - exit
                             if(object.visible == false) return; 
-
                             var geometry = object.geometry;
                             var matrixWorld = object.matrixWorld;
                             var skeleton = object.skeleton;
                             var mesh = object;
+			    console.log('Found Mesh' + mesh.name);
+		            if(typeof onlyExportThisMesh !== 'undefined' && mesh.name !== onlyExportThisMesh) return;
 
                             if(geometry instanceof RK.BufferGeometry){
                                 var oldgeometry = geometry.clone();
@@ -64,7 +65,6 @@ function init() {
 
                                 var vertices = geometry.vertices;
                                 var faces = geometry.faces;
-				debugger;
                                 normalMatrixWorld.getNormalMatrix( matrixWorld );
 
                                 if(typeof faces != 'undefined'){
