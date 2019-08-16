@@ -30,7 +30,7 @@ function init() {
                             var skeleton = object.skeleton;
                             var mesh = object;
 			    console.log('Found Mesh' + mesh.name);
-		            if(typeof onlyExportThisMesh !== 'undefined' && mesh.name !== onlyExportThisMesh) return;
+		            if(typeof onlyExportThisMesh !== 'undefined' && mesh.name != onlyExportThisMesh) return;
 
                             if(geometry instanceof RK.BufferGeometry){
                                 var oldgeometry = geometry.clone();
