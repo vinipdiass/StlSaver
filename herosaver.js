@@ -64,7 +64,7 @@ function init() {
 
                                 var vertices = geometry.vertices;
                                 var faces = geometry.faces;
-
+				debugger;
                                 normalMatrixWorld.getNormalMatrix( matrixWorld );
 
                                 if(typeof faces != 'undefined'){
