@@ -187,7 +187,7 @@ function init() {
     }
 
 
-	var characterArea_hook = ".characterArea";
+	var characterArea_hook = ".headerMenu-trigger-label";
 	var menu_style = {"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" };
 	
 	var character_area, stl, stl_base, sjson, ljson, labeljson;
