@@ -187,8 +187,8 @@ function init() {
     }
 
 
-	var characterArea_hook = ".headerMenu-trigger-label";
-	var menu_style = {"margin-left": "20px", "font-size": "1.4em", "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" };
+	var characterArea_hook = ".headerMenu-container";
+	var menu_style = {"margin-left": "20px",  "font-size": "1em",	 "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" };
 	
 	var character_area, stl, stl_base, sjson, ljson, labeljson;
 	
@@ -198,7 +198,7 @@ function init() {
 	ljson  = 			jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Import (JSON)");
 	labeljson  = 		jQuery("<label/>").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
 	
-	character_area = 	jQuery(characterArea_hook)[0];
+	character_area = 	jQuery(characterArea_hook).first();
 	
     //character_area.append(stl);
     character_area.append(stl_base);
