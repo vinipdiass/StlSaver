@@ -198,7 +198,7 @@ function init() {
 	ljson  = 			jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Import (JSON)");
 	labeljson  = 		jQuery("<label/>").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
 	
-	character_area = 	jQuery(characterArea_hook);
+	character_area = 	jQuery(characterArea_hook)[0];
 	
     //character_area.append(stl);
     character_area.append(stl_base);
