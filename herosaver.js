@@ -188,68 +188,23 @@ function init() {
 
 
 	var characterArea_hook = ".headerMenu-container";
-	var menu_style = {"margin-left": "20px",  "font-size": "1em",	 "color" : "rgba(255, 255, 255, 0.8)", "cursor" : "pointer" };
+	var menu_style = { "margin-left": "20px; width: 80px;" };
 	
-	var character_area, stl, stl_base, sjson, ljson, labeljson;
-	
-	stl = 				jQuery("<a />").css(menu_style).text("Export Figure");
-	stl_base = 			jQuery("<a />").css(menu_style).text("Export Model (STL)");
-	sjson = 			jQuery("<a />").css(menu_style).text("Export (JSON)");
+    var character_area, stl_base, sjson, ljson, labeljson;
+    
+	stl_base = 			jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export STL");
+	sjson = 			jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export JSON");
 	ljson  = 			jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Import (JSON)");
-	labeljson  = 		jQuery("<label/>").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
+	labeljson  = 		jQuery("<label class='jss7 jss9 jss10' />").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
 	
-	character_area = 	jQuery(characterArea_hook).first();
-	
-    //character_area.append(stl);
+    character_area = 	jQuery(characterArea_hook).first();
+    character_area.css("display: flex; justify-content: center; align-content: center;");
+    
     character_area.append(stl_base);
     character_area.append(sjson);
     character_area.append(ljson);
     character_area.append(labeljson);
-    character_area.css("right", 0);
 
-    /*stl.click(function(e) {
-        e.preventDefault(); 
-        var exporter = new RK.STLExporter();    
-        var objs = CK.character.children;    
-        var character = objs[0];
-        var figure = [];
-        var max_objs = 0;
-        var i;
-        for(i in objs) { // find character
-            if (objs[i].children.length > objs[max_objs].children.length) {
-                console.log("Id " + max_objs + " is not the character");
-                character = objs[i];
-                max_objs = i;
-            }        
-        }
-        if(character.children.length > 9) { // There is an option to hide the character. Since I do not know where this option is saved
-            // we use the following heuristic: If there is no object with 10 or more children, the character
-            // must be hidden...
-            console.log("Found Character, id=" + max_objs);
-            console.log(character);
-            figure.push(character);
-        }
-        if(CK.data.parts.mount !== undefined) {
-            console.log("Exporting Mount");
-            var mount = undefined;
-            for(i in objs) { // find mount
-                var j;
-                for(j in objs[i].children) {
-                    if(objs[i].children[j].name == "mount" && objs[i].children.length < 10) {
-                        console.log("Found mount, id=" + i + "," + j)
-                        mount = objs[i];
-                    }
-                }
-            }
-            console.log(mount);
-            figure.push(mount);
-            console.log(figure);
-        }
-        console.log(figure);
-        var stlString = exporter.parse(figure)
-        var name = get_name();
-        download(stlString, name + '.stl', 'application/sla');
-    });*/
     stl_base.click(function(e) {
         e.preventDefault(); 
         var exporter = new RK.STLExporter();    
