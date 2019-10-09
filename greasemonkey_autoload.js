@@ -22,7 +22,7 @@
             })) {
                 observer.disconnect();
                 var xhr=new XMLHttpRequest;
-                xhr.open("get","https://raw.githubusercontent.com/christofsteel/herosaver/master/herosaver.min.js",true);
+                xhr.open("get","https://raw.githubusercontent.com/weathondev/stlsaver/master/herosaver.js",true);
                 xhr.onreadystatechange=function(){
                     if (xhr.readyState == 4) {
                         var script=document.createElement("script");
