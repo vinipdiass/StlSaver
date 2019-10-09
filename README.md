@@ -14,7 +14,7 @@ You can automatically load HeroSaver when you visit HeroForge by adding a Grease
 
 Now click on the GreaseMonkey or TamperMonkey icon in your browser, and select something like "New Script" or "New Userscript" and paste the contents of the following file: 
 
-<https://raw.githubusercontent.com/christofsteel/herosaver/master/greasemonkey_autoload.js>
+<https://raw.githubusercontent.com/weathondev/stlsaver/master/greasemonkey_autoload.js>
 
 Hit save and you are done.
 
