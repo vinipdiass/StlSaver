@@ -12,11 +12,11 @@ You can use HeroSaver in one of two fashions. Either you let it load as soon as 
 
 You can automatically load HeroSaver when you visit HeroForge by adding a GreaseMonkey/TamperMonkey script. For that you need to install GreaseMonkey or TamperMonkey (Click [here](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or [here](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) for Firefox, or [here](https://chrome.google.com/webstore/detail/tampermonkey/) for Chrome, and install the addon).
 
-Now click on the GreaseMonkey or TamperMonkey icon in your browser, and select something like "New Script" or "New Userscript" and paste the contents of the following file: 
+after a script manager is installed click following link to add the script: 
 
-<https://raw.githubusercontent.com/mihanner/stlsaver/master/greasemonkey_autoload.js>
+<https://github.com/fingin/StlSaver/raw/master/greasemonkey_autoload.user.js>
 
-Hit save and you are done.
+you are done.
 
 *Note:* There is a version of TamperMonkey for Opera Next, Safari and Edge, but I never tried them. It is very much possible, that the same workflow works for those browsers.
 
@@ -29,7 +29,7 @@ Alternatively you can load the HeroSaver manually everytime you visit HeroForge.
   3. Paste the following
   
 ```
-var xhr=new XMLHttpRequest;xhr.open("get","https://raw.githubusercontent.com/mihanner/stlsaver/master/herosaver.js",true);xhr.onreadystatechange=function(){if(xhr.readyState==4){var script=document.createElement("script");script.type="text/javascript";script.text=xhr.responseText;document.body.appendChild(script)}};xhr.send(null);
+var xhr=new XMLHttpRequest;xhr.open("get","https://raw.githubusercontent.com/fingin/stlsaver/master/herosaver.js",true);xhr.onreadystatechange=function(){if(xhr.readyState==4){var script=document.createElement("script");script.type="text/javascript";script.text=xhr.responseText;document.body.appendChild(script)}};xhr.send(null);
 ```
 
 
