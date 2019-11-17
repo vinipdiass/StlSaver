@@ -22,7 +22,7 @@
             })) {
                 observer.disconnect();
                 var xhr=new XMLHttpRequest;
-                xhr.open("get","https://raw.githubusercontent.com/mihanner/stlsaver/master/herosaver.js",true);
+                xhr.open("get","https://raw.githubusercontent.com/fingin/stlsaver/master/herosaver.js",true);
                 xhr.onreadystatechange=function(){
                     if (xhr.readyState == 4) {
                         var script=document.createElement("script");
