@@ -14,7 +14,7 @@ You can automatically load HeroSaver when you visit HeroForge by adding a Grease
 
 after a script manager is installed click following link to add the script: 
 
-<https://github.com/fingin/StlSaver/raw/master/greasemonkey_autoload.user.js>
+<https://github.com/dserhienko/StlSaver/raw/master/greasemonkey_autoload.user.js>
 
 you are done.
 
@@ -29,7 +29,7 @@ Alternatively you can load the HeroSaver manually everytime you visit HeroForge.
   3. Paste the following
   
 ```
-var xhr=new XMLHttpRequest;xhr.open("get","https://raw.githubusercontent.com/fingin/stlsaver/master/herosaver.js",true);xhr.onreadystatechange=function(){if(xhr.readyState==4){var script=document.createElement("script");script.type="text/javascript";script.text=xhr.responseText;document.body.appendChild(script)}};xhr.send(null);
+var xhr=new XMLHttpRequest;xhr.open("get","https://raw.githubusercontent.com/dserhienko/stlsaver/master/herosaver.js",true);xhr.onreadystatechange=function(){if(xhr.readyState==4){var script=document.createElement("script");script.type="text/javascript";script.text=xhr.responseText;document.body.appendChild(script)}};xhr.send(null);
 ```
 
 
