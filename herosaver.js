@@ -187,23 +187,17 @@ function init() {
     }
 
 
-	var characterArea_hook = ".headerMenu-container";
-	var menu_style = { "margin-left": "20px", "width": "80px" };
-	
-    var character_area, stl_base, sjson, ljson, labeljson;
+	var menu_style = { "margin-left": "auto", "width": "100px", "background-color": "crimson", "cursor": "pointer", "pointer-events": "auto", "text-align": "center", "padding": "6px", "font-size": "large" };
+
+
+    var character_area, stl_base, labeljson;
     
-	stl_base = 			jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export STL");
-	sjson = 			jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export JSON");
-	ljson  = 			jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display":"none"}).text("Import (JSON)");
-	labeljson  = 		jQuery("<label class='jss7 jss9 jss10' />").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
+	stl_base = 			jQuery("<a/>").css(menu_style).text("Export STL");
 	
-    character_area = 	jQuery(".headerMenu-container").first();
+    character_area = 	jQuery(".dropdowns-0-1-31").first();
     character_area.css({"display": "flex", "justify-content": "center", "align-content": "center"});
     
-    character_area.append(stl_base);
-    character_area.append(sjson);
-    character_area.append(ljson);
-    character_area.append(labeljson);
+    character_area.prepend(stl_base);
 
     stl_base.click(function(e) {
         e.preventDefault(); 
@@ -213,26 +207,6 @@ function init() {
         download(stlString, name + '.stl', 'application/sla');
     });
 
-
-    sjson.click(function(e) {
-        e.preventDefault();
-        var char_json = JSON.stringify(CK.data);
-        var name = get_name();
-        download(char_json, name + ".json", "text/plain");
-    });
-
-    ljson.on('change', function(e) {
-        e.preventDefault();
-        var file = e.target.files[0];
-        var reader = new FileReader();
-        reader.onload = (function(theFile) {
-            return function(e) {
-                e.preventDefault();
-                CK.change(JSON.parse(e.target.result));
-            };
-        })(file);
-        reader.readAsText(file);
-    });
 })()};
 
 function inject_script(url, callback) {
@@ -245,7 +219,7 @@ function inject_script(url, callback) {
 }
 
 inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
-    inject_script("//cdnjs.cloudflare.com/ajax/libs/three.js/100/three.js", function () { init() })
+    inject_script("//raw.githubusercontent.com/carlalldis/StlSaver/master/three.js", function () { init() })
 });
 
 function get_name() {
