@@ -253,7 +253,7 @@ OBJExporter.prototype = {
 
 			}
 			
-			if ( child.type == "Object3D" ) {
+			if ( child.type == "SkinnedMesh" ) {
 
 				parseMesh( child );
 
