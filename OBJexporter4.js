@@ -252,6 +252,12 @@ OBJExporter.prototype = {
 				parseMesh( child );
 
 			}
+			
+			if ( child.type == "Object3D" ) {
+
+				parseMesh( child );
+
+			}
 
 			if ( child.type == "Line" ) {
 
