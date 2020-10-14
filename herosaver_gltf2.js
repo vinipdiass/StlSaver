@@ -4,6 +4,7 @@
 //cycle.js, by douglascrockford; 2018-05-15 [Public Domain] see https://github.com/douglascrockford/JSON-js for usage
 if (typeof JSON.decycle !== "function") {JSON.decycle = function decycle(object, replacer) {"use strict"; var objects = new WeakMap(); return (function derez(value, path) {var old_path; var nu; if (replacer !== undefined) {value = replacer(value)} if (typeof value === "object" && value !== null && !(value instanceof Boolean) && !(value instanceof Date) && !(value instanceof Number) && !(value instanceof RegExp) && !(value instanceof String)) {old_path = objects.get(value); if (old_path !== undefined) {return {$ref: old_path}} objects.set(value, path); if (Array.isArray(value)) {nu = []; value.forEach(function (element, i) {nu[i] = derez(element, path + "[" + i + "]")})} else {nu = {}; Object.keys(value).forEach(function (name) {nu[name] = derez(value[name], path + "[" + JSON.stringify(name) + "]")})} return nu} return value}(object, "$"))}} if (typeof JSON.retrocycle !== "function") {JSON.retrocycle = function retrocycle($) {"use strict"; var px = /^\$(?:\[(?:\d+|"(?:[^\\"\u0000-\u001f]|\\(?:[\\"\/bfnrt]|u[0-9a-zA-Z]{4}))*")\])*$/; (function rez(value) {if (value && typeof value === "object") {if (Array.isArray(value)) {value.forEach(function (element, i) {if (typeof element === "object" && element !== null) {var path = element.$ref; if (typeof path === "string" && px.test(path)) {value[i] = eval(path)} else {rez(element)} } })} else {Object.keys(value).forEach(function (name) {var item = value[name]; if (typeof item === "object" && item !== null) {var path = item.$ref; if (typeof path === "string" && px.test(path)) {value[name] = eval(path)} else {rez(item)} } })} } }($)); return $}}
 
+import {OBJExporter} from 'https://cdn.jsdelivr.net/gh/burndaflame/three.js@dev/examples/jsm/exporters/OBJExporter.js';
 import {ColladaExporter} from 'https://cdn.jsdelivr.net/gh/burndaflame/three.js@dev/examples/jsm/exporters/ColladaExporter.js';
 import {GLTFExporter} from 'https://cdn.jsdelivr.net/gh/burndaflame/three.js@dev/examples/jsm/exporters/GLTFExporter.js';
 import * as THREE from 'https://cdn.jsdelivr.net/gh/burndaflame/three.js@dev/build/three.module.js';
@@ -203,20 +204,22 @@ function init() {
       });
     }
 
-    var menu_style = { "margin-left": "auto", "width": "100px", "background-color": "crimson", "cursor": "pointer", "pointer-events": "auto", "text-align": "center", "padding": "6px", "font-size": "large" };
+    var menu_style = { "width": "150px", "background-color": "crimson", "cursor": "pointer", "pointer-events": "auto", "text-align": "center", "padding": "6px", "font-size": "large" };
 
     var character_area, stl_base, sjson, ljson, labeljson, sscene, gltf_base, collada_base;
 
     stl_base = jQuery("<a/>").css(menu_style).text("Export STL");
     gltf_base = jQuery("<a/>").css(menu_style).text("Export GLTF");
     collada_base = jQuery("<a/>").css(menu_style).text("Export Collada");
+    obj_base = jQuery("<a/>").css(menu_style).text("Export OBJ");
 
     character_area = jQuery(".dropdowns-0-1-31").first();
-    character_area.css({"display": "flex", "justify-content": "center", "align-content": "center"});
+    //character_area.css({"display": "flex", "justify-content": "center", "align-content": "center"});
 
     character_area.prepend(stl_base);
     character_area.prepend(gltf_base);
     character_area.prepend(collada_base);
+    character_area.prepend(obj_base);
 
     stl_base.click(function (e) {
       e.preventDefault();
@@ -250,6 +253,14 @@ function init() {
         var name = get_name();
         download(JSON.stringify(data), name + '.collada', "text/plain");
       }/*, options*/);
+    });
+	
+    obj_base.click(function (e) {
+      e.preventDefault();
+      var exporter = new OBJExporter();
+      var objString = exporter.parse(CK.character)
+      var name = get_name();
+      download(objString, name + '.stl', 'application/sla');
     });
 
   })()
