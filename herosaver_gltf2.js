@@ -198,28 +198,20 @@ function init() {
       });
     }
 
-    var menu_style = {"margin-left": "20px", "width": "80px"};
+    var menu_style = { "margin-left": "auto", "width": "100px", "background-color": "crimson", "cursor": "pointer", "pointer-events": "auto", "text-align": "center", "padding": "6px", "font-size": "large" };
 
     var character_area, stl_base, sjson, ljson, labeljson, sscene, gltf_base, collada_base;
 
-    stl_base = jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export STL");
-    gltf_base = jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export GLTF");
-    collada_base = jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export Collada");
-    sscene = jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export Scene as JSON");
-    sjson = jQuery("<a class='jss7 jss9 jss10' />").css(menu_style).text("Export JSON");
-    ljson = jQuery("<input/>").attr({"type": "file", "id": "ljson"}).css({"display": "none"}).text("Import (JSON)");
-    labeljson = jQuery("<label class='jss7 jss9 jss10' />").attr({"for": "ljson"}).css(menu_style).text("Import (JSON)");
+    stl_base = jQuery("<a/>").css(menu_style).text("Export STL");
+    gltf_base = jQuery("<a/>").css(menu_style).text("Export GLTF");
+    collada_base = jQuery("<a/>").css(menu_style).text("Export Collada");
 
-    character_area = jQuery(".headerMenu-container").first();
+    character_area = jQuery(".dropdowns-0-1-31").first();
     character_area.css({"display": "flex", "justify-content": "center", "align-content": "center"});
 
-    character_area.append(stl_base);
-    character_area.append(gltf_base);
-    character_area.append(collada_base);
-    character_area.append(sscene);
-    character_area.append(sjson);
-    character_area.append(ljson);
-    character_area.append(labeljson);
+    character_area.prepend(stl_base);
+    character_area.prepend(gltf_base);
+    character_area.prepend(collada_base);
 
     stl_base.click(function (e) {
       e.preventDefault();
@@ -255,32 +247,6 @@ function init() {
       }/*, options*/);
     });
 
-    sscene.click(function (e) {
-      e.preventDefault();
-      var char_json = JSON.stringify(JSON.decycle(CK.scene));
-      var name = get_name() + "_scene";
-      download(char_json, name + ".json", "text/plain");
-    });
-
-    sjson.click(function (e) {
-      e.preventDefault();
-      var char_json = JSON.stringify(JSON.decycle(CK.data));
-      var name = get_name();
-      download(char_json, name + ".json", "text/plain");
-    });
-
-    ljson.on('change', function (e) {
-      e.preventDefault();
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      reader.onload = (function (theFile) {
-        return function (e) {
-          e.preventDefault();
-          CK.change(JSON.retrocycle(JSON.parse(e.target.result)));
-        };
-      })(file);
-      reader.readAsText(file);
-    });
   })()
 };
 
