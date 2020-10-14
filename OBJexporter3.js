@@ -38,13 +38,13 @@ OBJExporter.prototype = {
 
 			var normalMatrixWorld = new Matrix3();
 
-			if ( geometry instanceof Geometry ) {
+			if ( geometry.type == "Geometry" ) {
 
 				geometry = new BufferGeometry().setFromObject( mesh );
 
 			}
 
-			if ( geometry instanceof BufferGeometry ) {
+			if ( geometry.type == "BufferGeometry" ) {
 
 				// shortcuts
 				var vertices = geometry.getAttribute( 'position' );
@@ -178,13 +178,13 @@ OBJExporter.prototype = {
 			var geometry = line.geometry;
 			var type = line.type;
 
-			if ( geometry instanceof Geometry ) {
+			if ( geometry.type == "Geometry" ) {
 
 				geometry = new BufferGeometry().setFromObject( line );
 
 			}
 
-			if ( geometry instanceof BufferGeometry ) {
+			if ( geometry.type == "BufferGeometry" ) {
 
 				// shortcuts
 				var vertices = geometry.getAttribute( 'position' );
