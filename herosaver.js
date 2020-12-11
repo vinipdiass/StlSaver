@@ -233,6 +233,15 @@ function init() {
 
 })()};
 
+function saveStl(e) {
+{
+        e.preventDefault(); 
+        var exporter = new RK.STLExporter();    
+        var stlString = exporter.parse(CK.character)
+        var name = get_name();
+        download(stlString, name + '.stl', 'application/sla');
+}
+
 function inject_script(url, callback) {
   var head = document.getElementsByTagName("head")[0];
   var script = document.createElement("script");
