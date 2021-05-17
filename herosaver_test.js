@@ -293,7 +293,7 @@ function inject_script(url, callback) {
 
 console.log("HeroSaver - Injecting Libraries");
 
-inject_script("//code.jquery.com/jquery-3.6.0.min.js", function () {
+inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
     inject_script("//cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js", function () { init() })
 });
 //inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
