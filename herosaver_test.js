@@ -294,7 +294,7 @@ function inject_script(url, callback) {
 console.log("HeroSaver - Injecting Libraries");
 
 inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
-    inject_script("//cdnjs.cloudflare.com/ajax/libs/three.js/r120/three.module.min.js", function () { init() })
+ inject_script("//cdn.jsdelivr.net/npm/three@0.143.0/build/three.min.js", function () { init() })
 });
 //inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
 //    inject_script("//cdn.jsdelivr.net/gh/burndaflame/three.js@dev/build/three.module.js", function () { init() })
