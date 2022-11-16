@@ -159,10 +159,10 @@ function init() {
                                 for (let i = 0; i < 4; i++) {
 
                                     const weight = skinWeight.getComponent(i);
+                                    const boneIndex = skinIndex.getComponent(i);
 
-                                    if (weight !== 0) {
+                                    if (weight !== 0 && skeleton.bones[boneIndex] != null) {
 
-                                        const boneIndex = skinIndex.getComponent(i);
 
                                         matrix.multiplyMatrices(skeleton.bones[boneIndex].matrixWorld, skeleton.boneInverses[boneIndex]);
 
