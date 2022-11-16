@@ -155,6 +155,7 @@ function init() {
                                 basePosition.fromBufferAttribute(geometry.attributes.position, index).applyMatrix4(this.bindMatrix);
 
                                 target.set(0, 0, 0);
+                                console.log(skeleton)
 
                                 for (let i = 0; i < 4; i++) {
 
