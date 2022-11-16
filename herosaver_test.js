@@ -151,6 +151,8 @@ function init() {
                                 //skinWeight.fromBufferAttribute(geometry.attributes.skinWeight0, index);
                                 skinIndex.fromBufferAttribute(geometry.attributes.skin0, index);
                                 skinWeight.fromBufferAttribute(geometry.attributes.skin0, index);
+                                console.log(geometry.attributes.skin0);
+                                console.log(skinWeight);
 
                                 basePosition.fromBufferAttribute(geometry.attributes.position, index).applyMatrix4(this.bindMatrix);
 
@@ -160,8 +162,6 @@ function init() {
 
                                     const weight = skinWeight.getComponent(i);
                                     const boneIndex = skinIndex.getComponent(i);
-                                    console.log(boneIndex);
-                                    console.log(skeleton.bones.length);
 
                                     if (weight !== 0 && skeleton.bones[boneIndex] != null) {
 
