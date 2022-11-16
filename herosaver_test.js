@@ -151,8 +151,8 @@ function init() {
                                 //skinWeight.fromBufferAttribute(geometry.attributes.skinWeight0, index);
                                 skinIndex.fromBufferAttribute(geometry.attributes.skin0, index);
                                 skinWeight.fromBufferAttribute(geometry.attributes.skin0, index);
-                                console.log(geometry.attributes.skin0);
-                                console.log(skinWeight);
+                                
+                                console.log(geometry.attributes);
 
                                 basePosition.fromBufferAttribute(geometry.attributes.position, index).applyMatrix4(this.bindMatrix);
 
