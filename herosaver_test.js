@@ -4,9 +4,6 @@
 console.log("HeroSaver - Starting Loading");
 
 function init() {
-
-
-
     (function () {
 
         THREE.STLExporter = function () { };
@@ -21,8 +18,6 @@ function init() {
 
                 var binary = options.binary !== undefined ? options.binary : false;
 
-                //
-
                 var objects = [];
                 var triangles = 0;
 
@@ -32,10 +27,8 @@ function init() {
 
                         var geometry = object.geometry;
 
-                        if (geometry.isGeometry) {
-
+                        if (!geometry.isBufferGeometry) {
                             geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-
                         }
 
                         var index = geometry.index;
@@ -86,8 +79,6 @@ function init() {
 
                     if (index !== null) {
 
-                        // indexed geometry
-
                         for (var j = 0; j < index.count; j += 3) {
 
                             var a = index.getX(j + 0);
@@ -99,8 +90,6 @@ function init() {
                         }
 
                     } else {
-
-                        // non-indexed geometry
 
                         for (var j = 0; j < positionAttribute.count; j += 3) {
 
@@ -131,54 +120,6 @@ function init() {
                     vC.fromBufferAttribute(positionAttribute, c);
 
                     if (object.isSkinnedMesh === true) {
-
-                        object.boneTransform = (function () {
-
-                            const basePosition = new THREE.Vector3();
-
-                            const skinIndex = new THREE.Vector4();
-                            const skinWeight = new THREE.Vector4();
-
-                            const vector = new THREE.Vector3();
-                            const matrix = new THREE.Matrix4();
-
-                            return function (index, target) {
-
-                                const skeleton = this.skeleton;
-                                const geometry = this.geometry;
-
-                                //skinIndex.fromBufferAttribute(geometry.attributes.skinIndex0, index);
-                                //skinWeight.fromBufferAttribute(geometry.attributes.skinWeight0, index);
-                                skinIndex.fromBufferAttribute(geometry.attributes.skin0, index);
-                                skinWeight.fromBufferAttribute(geometry.attributes.skin0, index);
-                                
-                                console.log(geometry.attributes);
-
-                                basePosition.fromBufferAttribute(geometry.attributes.position, index).applyMatrix4(this.bindMatrix);
-
-                                target.set(0, 0, 0);
-
-                                for (let i = 0; i < 4; i++) {
-
-                                    const weight = skinWeight.getComponent(i);
-                                    const boneIndex = skinIndex.getComponent(i);
-
-                                    if (weight !== 0 && skeleton.bones[boneIndex] != null) {
-
-
-                                        matrix.multiplyMatrices(skeleton.bones[boneIndex].matrixWorld, skeleton.boneInverses[boneIndex]);
-
-                                        target.addScaledVector(vector.copy(basePosition).applyMatrix4(matrix), weight);
-
-                                    }
-
-                                }
-
-                                return target.applyMatrix4(this.bindMatrixInverse);
-
-                            };
-
-                        }())
 
                         object.boneTransform(a, vA);
                         object.boneTransform(b, vB);
@@ -261,28 +202,29 @@ function init() {
             });
         }
 
-
         var menu_style = { "margin-left": "auto", "width": "100px", "background-color": "crimson", "cursor": "pointer", "pointer-events": "auto", "text-align": "center", "padding": "6px", "font-size": "large" };
 
-
-        var character_area, stl_base, labeljson;
-
-        stl_base = jQuery("<a/>").css(menu_style).text("Export STL");
+        var character_area, stl_base;
 
         character_area = jQuery(".dropdowns-0-2-37").first();
+        if (character_area.length === 0) {
+            console.error("Character area not found. Selector may need to be updated.");
+            return;
+        }
         character_area.css({ "display": "flex", "justify-content": "center", "align-content": "center" });
 
+        stl_base = jQuery("<a/>").css(menu_style).text("Export STL");
         character_area.prepend(stl_base);
 
         stl_base.click(function (e) {
             e.preventDefault();
             var exporter = new THREE.STLExporter();
-            var stlString = exporter.parse(CK.character)
+            var stlString = exporter.parse(CK.character);
             var name = get_name();
             download(stlString, name + '.stl', 'application/sla');
         });
 
-    })()
+    })();
 };
 
 function inject_script(url, callback) {
@@ -290,38 +232,26 @@ function inject_script(url, callback) {
     var script = document.createElement("script");
     script.src = url;
     script.onload = function (e) {
-        callback()
+        callback();
     };
     head.appendChild(script);
 }
 
 console.log("HeroSaver - Injecting Libraries");
 
-inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
- inject_script("//cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js", function () { init() })
+inject_script("//code.jquery.com/jquery-3.6.0.min.js", function () {
+    inject_script("//cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js", function () { init(); });
 });
-//inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
-//    inject_script("//cdn.jsdelivr.net/gh/burndaflame/three.js@dev/build/three.module.js", function () { init() })
-//});
-// inject_script("//code.jquery.com/jquery-3.3.1.min.js", function () {
-//     inject_script("//raw.githubusercontent.com/Sonic-Cloud/StlSaver/master/three.js", function () { init() })
-// });
 
 function get_name() {
     var timestamp = new Date().getUTCMilliseconds();
     var uqID = timestamp.toString(36);
     var name = "Character " + uqID;
     try {
-        var getName = CK.character.data.meta.character_name
+        var getName = CK.character.data.meta.character_name;
         name = getName === "" ? name : getName;
     } catch (e) {
-        if (e instanceof ReferenceError) {
-            console.log("Name of character data location has changed");
-            console.log(e);
-        } else {
-            console.log("Other Error");
-            console.log(e);
-        }
+        console.error("Error retrieving character name:", e);
     }
     return name;
 }
