@@ -1,10 +1,9 @@
-// Ensure this script runs as an ES module
 console.log("HeroSaver - Starting Loading");
 
 function init() {
     (function () {
 
-        // Import the STLExporter from the Three.js examples if necessary
+        // STL Exporter definition
         THREE.STLExporter = function () { };
 
         THREE.STLExporter.prototype = {
@@ -200,17 +199,26 @@ function init() {
             "pointer-events": "auto",
             "text-align": "center",
             "padding": "6px",
-            "font-size": "large"
+            "font-size": "large",
+            "color": "white"
         };
 
         var character_area, stl_base;
 
+        // Ensure that the character area is correctly selected
         character_area = jQuery(".dropdowns-0-2-37").first();
         if (character_area.length === 0) {
             console.error("Character area not found. Selector may need to be updated.");
             return;
         }
-        character_area.css({ "display": "flex", "justify-content": "center", "align-content": "center" });
+
+        character_area.css({
+            "display": "flex",
+            "justify-content": "center",
+            "align-content": "center",
+            "position": "relative",
+            "z-index": "1000"
+        });
 
         stl_base = jQuery("<a/>").css(menu_style).text("Export STL");
         character_area.prepend(stl_base);
@@ -238,8 +246,9 @@ function inject_script(url, callback) {
 
 console.log("HeroSaver - Injecting Libraries");
 
-inject_script("//code.jquery.com/jquery-3.6.0.min.js", function () {
-    inject_script("/path/to/three.module.min.js", function () { init(); }); // Ensure the correct path is provided
+// Load scripts in the correct order
+inject_script("https://code.jquery.com/jquery-3.6.0.min.js", function () {
+    inject_script("/path/to/three.module.min.js", function () { init(); });
 });
 
 function get_name() {
