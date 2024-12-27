@@ -248,8 +248,11 @@ console.log("HeroSaver - Injecting Libraries");
 
 // Load scripts in the correct order
 inject_script("https://code.jquery.com/jquery-3.6.0.min.js", function () {
-    inject_script("https://raw.githubusercontent.com/vinipdiass/StlSaver/master/three.js", function ()
+    inject_script("https://raw.githubusercontent.com/vinipdiass/StlSaver/master/three.js", function () {
+        init();
+    });
 });
+
 
 function get_name() {
     var timestamp = new Date().getUTCMilliseconds();
